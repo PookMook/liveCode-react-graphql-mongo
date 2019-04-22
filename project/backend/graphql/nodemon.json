@@ -1,0 +1,8 @@
+{
+    "env": {
+        "JWT_SECRET_TOKEN": "YouShouldChangeThis",
+        "HTTPS": false,
+        "NODE_ENV": "Dev",
+        "ALLOW_CORS_FRONTEND": "http://localhost:8580"
+    }
+}

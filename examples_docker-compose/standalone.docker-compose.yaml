@@ -1,12 +1,61 @@
 version: '3'
 
 services:
-  LiveCode:
+  livecode-editor-dev:
     image: codercom/code-server
-    container_name: "liveCode"
+    container_name: "livecode-editor-dev"
     command: code-server --allow-http --no-auth
     volumes:
-      - "./project:/root/project"
+      - "./project:/home/coder/project/code-server"
     ports:
       - "8443:8443"
     restart: always
+  mongodb-livecode-dev:
+    image: mongo:latest
+    container_name: "mongodb-livecode-dev"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - "./project/db:/data/db"
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null
+  mongodb-admin-livecode-dev:
+    image: mongo-express
+    container_name: "mongodb-admin-livecode-dev"
+    links:
+      - mongodb-livecode-dev:mongo
+    ports:
+      - 8380:8081
+  graphql-livecode-dev:
+    build: 
+      context: "./project/backend"
+      dockerfile: dockerfile-dev
+    container_name: "graphql-livecode-dev"
+    volumes:
+      - "./project/backend/graphql:/usr/src/app"
+      - /usr/src/app/node_modules
+    ports:
+      - 8480:80
+    depends_on:
+      - mongodb-livecode-dev
+    environment:
+      - MONGO_SERVER=mongodb-livecode-dev
+      - MONGO_SERVER_PORT=27017
+      - MONGO_SERVER_DB=liveCode
+      - HTTPS=false
+      - JWT_SECRET_TOKEN=YouShouldChangeThis
+      - ALLOW_CORS_FRONTEND=http://localhost:8580
+  frontend-livecode-dev:
+    build: 
+      context: ./project/frontend
+      dockerfile: dockerfile-dev
+    container_name: "frontend-livecode-dev"
+    volumes:
+      - "./project/frontend/gatsby:/usr/src/app"
+      - /usr/src/app/node_modules
+    ports:
+      - 8580:80
+    depends_on:
+      - graphql-livecode-dev

@@ -1,0 +1,40 @@
+@import 'variables.scss';
+@import 'defaults.scss';
+
+html{
+    background-color:$main-background-color;
+    font-family: sans-serif;
+    color:$main-color;
+    font-size: 100%;
+    @media screen and (min-width: $tablet-breakpoint){
+        font-size: 110%;
+    }
+    @media screen and (min-width: $screen-breakpoint){
+        font-size: 120%;
+    }
+    @media screen and (min-width: $large-screen-breakpoint){
+        font-size: 140%;
+    }
+}
+
+html,body,#___gatsby,#___gatsby > div, #___gatsby > div > div, #___gatsby > div > div > main{
+    height:100%;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+a {
+    color:$main-color-links;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+ul,p,h1,h2,h3,h4,h5,html,body {
+    margin:0;
+    padding:0;
+}
+li{
+    list-style: none;
+}
