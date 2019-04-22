@@ -6,7 +6,7 @@ services:
     container_name: "livecode-editor-dev"
     command: code-server --allow-http --no-auth
     volumes:
-      - "./project:/home/coder/project/code-server"
+      - ".:/home/coder/project/code-server"
     ports:
       - "8443:8443"
     restart: always
