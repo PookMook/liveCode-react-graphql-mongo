@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  LiveCode:
+    image: codercom/code-server
+    container_name: "liveCode"
+    command: code-server --allow-http --no-auth
+    volumes:
+      - "./project:/root/project"
+    ports:
+      - "8443:8443"
+    restart: always
