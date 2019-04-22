@@ -1,1 +1,6 @@
 docker-compose.yaml
+frontend/gatsby/.cache
+frontend/gatsby/node_modules
+frontend/gatsby/public
+
+backend/graphql/node_modules
